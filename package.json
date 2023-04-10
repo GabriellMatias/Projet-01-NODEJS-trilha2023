@@ -5,12 +5,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/serve.js"
+    "dev": "node --inspect --watch src/serve.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "^3.3.1"
+    "node-fetch": "^3.3.1",
+    "uuid": "^9.0.0"
   }
 }
