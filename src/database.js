@@ -14,15 +14,23 @@ export class DataBase {
   constructor() {
     fs.readFile(databasePath, "utf-8").then(response => {
       this.#database = JSON.parse(response)
-    }).catch(()=>{
+    }).catch(() => {
       this.#persist()
     })
   }
 
   select(table) {
     const data = this.#database[table] ?? []
-
     return data
+  }
+
+  delete(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+    if (rowIndex > -1) {
+      this.#database[table].splice(rowIndex, 1)
+      this.#persist()
+    }
+
   }
 
 
