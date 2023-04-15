@@ -3,6 +3,7 @@ import http from "node:http"
 /*Quando o type do package e module tem que especificar o tipo do arquiv */
 import { json } from "./middlawares/json.js"
 import { routes } from "./routes.js"
+import { extractQueryParams } from "./Utils/extract-query-params.js"
 
 /*
 Query Params
@@ -37,9 +38,11 @@ const server = http.createServer(async (req, res) => {
     /*Executa a regex na rul para retornar qual daados a regex encontrou na rota */
     const routeParams = req.url.match(route.path)
     
-    req.params = {...routeParams.groups}
+    const {Query, ...params} = routeParams.groups
 
-
+    req.params = params
+    req.Query = Query ? extractQueryParams(Query) : {}
+       
     return route.handler(req, res)
   }
   return res.writeHead(404).end()
